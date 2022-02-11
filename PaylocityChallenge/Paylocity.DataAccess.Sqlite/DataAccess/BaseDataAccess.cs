@@ -40,7 +40,6 @@ namespace Paylocity.DataAccess.Sqlite.DataAccess
             using var connection = new SqliteConnection(_connectionString);
 
             return connection.Query<TModel>($"SELECT * FROM {_tableName}");
-
         }
     }
 }
