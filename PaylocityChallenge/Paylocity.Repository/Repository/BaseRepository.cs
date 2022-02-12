@@ -25,6 +25,11 @@ namespace Paylocity.Repository.Repository
             return _dataAccess.Update(model);
         }
 
+        public void Delete(TModel model)
+        {
+            _dataAccess.Delete(model);
+        }
+
         public virtual TModel Get(int id)
         {
             return _dataAccess.Get(id);

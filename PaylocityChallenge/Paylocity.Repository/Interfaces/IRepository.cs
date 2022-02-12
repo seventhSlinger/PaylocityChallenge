@@ -7,6 +7,7 @@ namespace Paylocity.Repository.Interfaces
     {
         int Create(TModel model);
         int Update(TModel model);
+        void Delete(TModel model);
         TModel Get(int id);
         IEnumerable<TModel> List();
     }

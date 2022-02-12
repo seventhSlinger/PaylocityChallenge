@@ -45,6 +45,16 @@ namespace Paylocity.DataAccess.Sqlite.DataAccess
             return model.Id;
         }
 
+        public void Delete(TModel model)
+        {
+            using var connection = new SqliteConnection(_connectionString);
+
+            var models = new List<TModel> { model };
+            connection.BulkDelete(models);
+
+            return;
+        }
+
         public virtual TModel Get(int id)
         {
             using var connection = new SqliteConnection(_connectionString);
