@@ -6,7 +6,6 @@ using Paylocity.DataAccess.Sqlite.Interfaces;
 using Paylocity.Models.Models;
 using Paylocity.Repository.Interfaces;
 using Paylocity.Repository.Repository;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
