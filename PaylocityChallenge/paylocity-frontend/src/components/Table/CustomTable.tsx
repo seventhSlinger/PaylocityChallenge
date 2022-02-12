@@ -5,6 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
 import { ITableProps } from './ITableProps';
 
 function CustomTable<TValue extends object>(props: ITableProps<TValue>) {
@@ -33,6 +34,11 @@ function CustomTable<TValue extends object>(props: ITableProps<TValue>) {
             </TableRow>
           )}
         </TableBody>
+        {props.footerRenderer && <TableFooter>
+          <TableRow>
+            {props.footerRenderer()}
+          </TableRow>
+        </TableFooter>}
       </MuiTable>
     </TableContainer>
   );

@@ -3,6 +3,7 @@ export interface ITableProps<TValue>{
     data: Array<TValue>;    
     keyExtractor: (value: TValue, index: number) => string;
     columns: Array<ITableColumn<TValue>>;
+    footerRenderer?: () => JSX.Element;
 }
   
 export interface ITableColumn<TValue> {

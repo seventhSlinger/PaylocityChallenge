@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
-import CompanyScreen from './screens/CompanyScreen';
+import CompanyScreen from './screens/CompanyScreen/CompanyScreen';
 import Container from '@mui/material/Container';
 
 function App() {

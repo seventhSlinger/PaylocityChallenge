@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Company from "../models/Company";
+import Company from "../../models/Company";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -10,15 +10,20 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-import Benefit from "../models/Benefit";
-import Payroll from "../models/Payroll";
-import CardActions from '@mui/material/CardActions';
+import Benefit from "../../models/Benefit";
+import Payroll from "../../models/Payroll";
 import { CircularProgress } from "@mui/material";
+import Employee from "../../models/Employee";
+import CustomTable from "../../components/Table/CustomTable";
+import EmployeeButtonGroup from "./EmployeeButtonGroup";
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function CompanyScreen() {
   const [company, setCompany] = useState<Company | undefined>();
   const [benefit, setBenefit] = useState<Benefit | undefined>();
   const [payroll, setPayroll] = useState<Payroll | undefined>();
+  const [employees, setEmployees] = useState<Array<Employee>>([]);
   const [loading, setLoading] = useState(true);
   const params = useParams();
 
@@ -37,12 +42,16 @@ function CompanyScreen() {
 
       const benefitsFetch = fetch(`/benefit/${company.benefitId}`);
       const payrollFetch = fetch(`/payroll/${company.payrollId}`);
-      const promises = await Promise.all([benefitsFetch, payrollFetch]);
+      const employeesFetch = fetch(`/employee/company/${company.id}`);
+      const promises = await Promise.all([benefitsFetch, payrollFetch, employeesFetch]);
       const benefit = await promises[0].json() as Benefit;
       const payroll = await promises[1].json() as Payroll;
+      const employees = await promises[2].json() as Array<Employee>;
+
       setLoading(false);
       setBenefit(benefit);
       setPayroll(payroll);
+      setEmployees(employees);
     }
 
     fetchData()
@@ -104,6 +113,30 @@ function CompanyScreen() {
                 </Typography>
               </CardContent>
             </Card>}
+          </Grid>
+          <Grid item xl={12}>
+            {!loading &&
+              <CustomTable
+                headers={['First Name', 'Last Name', '']}
+                data={employees}
+                keyExtractor={(value: Employee, index: number) => value.id?.toString() ?? index.toString()}
+                columns={[
+                  {
+                    getValue: (value: Employee) => value.firstName,
+                  },
+                  {
+                    getValue: (value: Employee) => value.lastName,
+                  },
+                  {
+                    getValue: (value: Employee) => 'Value',
+                    customRenderer: (value: Employee) => <EmployeeButtonGroup employee={value} />,
+                  }
+                ]}
+                footerRenderer={() => (<Button>
+                    <Link to={`/employee/create`}>Create</Link>
+                  </Button>)}
+              />
+            }
           </Grid>
         </Grid>
       </Box>
