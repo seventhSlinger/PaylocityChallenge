@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import Employee from '../../models/Employee';
 import { Link } from 'react-router-dom';
 import AlertDialog from '../../components/Alert/AlertDialog';
 import LoadingButton from '@mui/lab/LoadingButton';
-import DeleteIcon  from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Dependent from '../../models/Dependent';
 
-interface IEmployeeButtonGroupProps {
-    employee: Employee;
-    onDeletePress: (employee: Employee) => Promise<void>;
+interface IDependentButtonGroupProps {
+    dependent: Dependent;
+    companyId: string;
+    onDeletePress: (dependent: Dependent) => Promise<void>;
 }
 
-function EmployeeButtonGroup(props: IEmployeeButtonGroupProps) {
+function DependentButtonGroup(props: IDependentButtonGroupProps) {
     const [open, setOpen] = useState(false);
     const [deleting, setDeleting] = useState(false);
 
     const onDeleteClick = async () => {
         setOpen(false);
         setDeleting(true);
-        await props.onDeletePress(props.employee);
+        await props.onDeletePress(props.dependent);
         setDeleting(false);
     }
 
@@ -27,18 +28,13 @@ function EmployeeButtonGroup(props: IEmployeeButtonGroupProps) {
         <React.Fragment>
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
                 <Button>
-                    <Link style={{ color: 'white' }} to={`/company/${props.employee.companyId}/employee/${props.employee.id}`}>
+                    <Link style={{ color: 'white' }} to={`/company/${props.companyId}/employee/${props.dependent.employeeId}/dependent/${props.dependent.id}`}>
                         View
                     </Link>
                 </Button>
                 <Button>
-                    <Link style={{ color: 'white' }} to={`/company/${props.employee.companyId}/employee/update/${props.employee.id}`}>
+                    <Link style={{ color: 'white' }} to={`/company/${props.companyId}/employee/${props.dependent.employeeId}/dependent/update/${props.dependent.id}`}>
                         Update
-                    </Link>
-                </Button>
-                <Button>
-                    <Link style={{ color: 'white' }} to={`/company/${props.employee.companyId}/employee/${props.employee.id}/dependent`}>
-                        Dependents
                     </Link>
                 </Button>
                 <LoadingButton
@@ -59,4 +55,4 @@ function EmployeeButtonGroup(props: IEmployeeButtonGroupProps) {
     );
 }
 
-export default EmployeeButtonGroup;
+export default DependentButtonGroup;
