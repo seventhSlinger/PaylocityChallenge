@@ -20,6 +20,11 @@ namespace Paylocity.Repository.Repository
             return _dataAccess.Create(model);
         }
 
+        public TModel Get(int id)
+        {
+            return _dataAccess.Get(id);
+        }
+
         public virtual IEnumerable<TModel> List()
         {
             return _dataAccess.List();

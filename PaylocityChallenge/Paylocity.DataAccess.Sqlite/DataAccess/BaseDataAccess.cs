@@ -35,6 +35,15 @@ namespace Paylocity.DataAccess.Sqlite.DataAccess
             return model.Id;
         }
 
+        public TModel Get(int id)
+        {
+            using var connection = new SqliteConnection(_connectionString);
+
+            var model = connection.QuerySingleOrDefault<TModel>($"SELECT * FROM {_tableName} WHERE Id = @Id", new { Id = id });
+
+            return model;
+        }
+
         public virtual IEnumerable<TModel> List()
         {
             using var connection = new SqliteConnection(_connectionString);

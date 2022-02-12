@@ -6,6 +6,7 @@ namespace Paylocity.DataAccess.Sqlite.Interfaces
     public interface IDataAccess<TModel> where TModel : class, IUniqueModel
     {
         int Create(TModel model);
+        TModel Get(int id);
         IEnumerable<TModel> List();
     }
 }
