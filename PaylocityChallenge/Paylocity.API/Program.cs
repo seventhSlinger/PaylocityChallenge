@@ -21,10 +21,12 @@ builder.Services.Configure<DatabaseConfig>(builder.Configuration.GetSection("Dat
 builder.Services.AddScoped<IRepository<Company>, CompanyRepository>();
 builder.Services.AddScoped<IRepository<Benefit>, BenefitRepository>();
 builder.Services.AddScoped<IRepository<Payroll>, PayrollRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 builder.Services.AddScoped<IDataAccess<Company>, CompanyDataAccess>();
 builder.Services.AddScoped<IDataAccess<Benefit>, BenefitDataAccess>();
 builder.Services.AddScoped<IDataAccess<Payroll>, PayrollDataAccess>();
+builder.Services.AddScoped<IEmployeeDataAccess, EmployeeDataAccess>();
 
 var app = builder.Build();
 

@@ -39,7 +39,7 @@ namespace Paylocity.DataAccess.Sqlite.DataAccess
         {
             using var connection = new SqliteConnection(_connectionString);
 
-            var model = connection.QuerySingleOrDefault<TModel>($"SELECT * FROM {_tableName} WHERE Id = @Id", new { Id = id });
+            var model = connection.QuerySingleOrDefault<TModel>($"SELECT * FROM {_tableName} WHERE {nameof(IUniqueModel.Id)} = @Id", new { Id = id });
 
             return model;
         }
