@@ -18,5 +18,10 @@ namespace Paylocity.Repository.Repository
         {
             return _dependentDataAccess.GetDependentsForEmployee(employeeId);
         }
+
+        public IEnumerable<Dependent> GetDependentsForEmployees(IEnumerable<int> employeeIds)
+        {
+            return _dependentDataAccess.GetDependentsForEmployees(employeeIds);
+        }
     }
 }

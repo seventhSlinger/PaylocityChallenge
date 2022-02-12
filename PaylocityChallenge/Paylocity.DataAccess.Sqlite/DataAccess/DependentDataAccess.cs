@@ -21,5 +21,17 @@ namespace Paylocity.DataAccess.Sqlite.DataAccess
 
             return models;
         }
+
+        public IEnumerable<Dependent> GetDependentsForEmployees(IEnumerable<int> employeeIds)
+        {
+            using var connection = new SqliteConnection(_connectionString);
+            var idString = string.Join(',', employeeIds);
+            if (string.IsNullOrEmpty(idString))
+                idString = "0";
+
+            var models = connection.Query<Dependent>($"SELECT * FROM {_tableName} WHERE {nameof(Dependent.EmployeeId)} IN ({idString})");
+
+            return models;
+        }
     }
 }

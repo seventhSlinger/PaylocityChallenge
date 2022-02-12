@@ -6,5 +6,6 @@ namespace Paylocity.Repository.Interfaces
     public interface IDependentRepository : IRepository<Dependent>
     {
         IEnumerable<Dependent> GetDependentsForEmployee(int employeeId);
+        IEnumerable<Dependent> GetDependentsForEmployees(IEnumerable<int> employeeIds);
     }
 }

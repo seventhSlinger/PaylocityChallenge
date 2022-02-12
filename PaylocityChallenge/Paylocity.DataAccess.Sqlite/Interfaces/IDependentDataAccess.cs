@@ -6,5 +6,6 @@ namespace Paylocity.DataAccess.Sqlite.Interfaces
     public interface IDependentDataAccess : IDataAccess<Dependent>
     {
         IEnumerable<Dependent> GetDependentsForEmployee(int employeeId);
+        IEnumerable<Dependent> GetDependentsForEmployees(IEnumerable<int> employeeIds);
     }
 }
