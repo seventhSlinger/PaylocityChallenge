@@ -58,6 +58,20 @@ function CompanyScreen() {
       .catch(error => console.error(`ERROR: ${error}`));
   }, []);
 
+  const onDeletePress = async (employee: Employee) => {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    } as RequestInit;
+    const url = `/employee/${employee?.id}`
+    await fetch(url, options);
+    const employeesFetch = await fetch(`/employee/company/${company?.id}`);
+    const employees = await employeesFetch.json() as Array<Employee>;
+    setEmployees(employees);
+  }
+
   return (
     <Container maxWidth="xl">
       <Box sx={{ flexGrow: 1, height: '100vh' }}>
@@ -129,7 +143,7 @@ function CompanyScreen() {
                   },
                   {
                     getValue: (value: Employee) => 'Value',
-                    customRenderer: (value: Employee) => <EmployeeButtonGroup employee={value} />,
+                    customRenderer: (value: Employee) => <EmployeeButtonGroup employee={value} onDeletePress={onDeletePress}/>,
                   }
                 ]}
                 footerRenderer={() => (<Button variant="contained" sx={{mt: 1.5, mb: 1.5, ml: 1.5}}>
