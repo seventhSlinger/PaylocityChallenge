@@ -35,6 +35,16 @@ namespace Paylocity.DataAccess.Sqlite.DataAccess
             return model.Id;
         }
 
+        public virtual int Update(TModel model)
+        {
+            using var connection = new SqliteConnection(_connectionString);
+
+            var models = new List<TModel> { model };
+            connection.BulkUpdate(models);
+
+            return model.Id;
+        }
+
         public virtual TModel Get(int id)
         {
             using var connection = new SqliteConnection(_connectionString);

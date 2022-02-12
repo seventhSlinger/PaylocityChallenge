@@ -18,7 +18,7 @@ namespace Paylocity.API.Controllers
         [HttpPost("")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult Create(TModel model)
+        public IActionResult Create([FromBody] TModel model)
         {
             if (model == null)
             {
@@ -27,6 +27,21 @@ namespace Paylocity.API.Controllers
             _ = _repository.Create(model);
 
             return StatusCode(((int)HttpStatusCode.Created));
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult Update([FromBody] TModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            _ = _repository.Update(model);
+
+            return NoContent();
         }
 
         [HttpGet("{id}")]

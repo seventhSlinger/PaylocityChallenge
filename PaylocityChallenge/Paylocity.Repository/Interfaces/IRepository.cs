@@ -6,6 +6,7 @@ namespace Paylocity.Repository.Interfaces
     public interface IRepository<TModel> where TModel : IUniqueModel
     {
         int Create(TModel model);
+        int Update(TModel model);
         TModel Get(int id);
         IEnumerable<TModel> List();
     }
