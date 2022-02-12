@@ -18,11 +18,13 @@ import CustomTable from "../../components/Table/CustomTable";
 import EmployeeButtonGroup from "./EmployeeButtonGroup";
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import PayrollSummary from "../../models/PayrollSummary";
 
 function CompanyScreen() {
   const [company, setCompany] = useState<Company | undefined>();
   const [benefit, setBenefit] = useState<Benefit | undefined>();
   const [payroll, setPayroll] = useState<Payroll | undefined>();
+  const [payrollSummary, setPayrollSummary] = useState<PayrollSummary>();
   const [employees, setEmployees] = useState<Array<Employee>>([]);
   const [loading, setLoading] = useState(true);
   const params = useParams();
@@ -43,6 +45,7 @@ function CompanyScreen() {
       const benefitsFetch = fetch(`/benefit/${company.benefitId}`);
       const payrollFetch = fetch(`/payroll/${company.payrollId}`);
       const employeesFetch = fetch(`/employee/company/${company.id}`);
+      const payrollSummaryFetch = fetch(`/company/${company.id}/payroll`);
       const promises = await Promise.all([benefitsFetch, payrollFetch, employeesFetch]);
       const benefit = await promises[0].json() as Benefit;
       const payroll = await promises[1].json() as Payroll;
@@ -52,6 +55,9 @@ function CompanyScreen() {
       setBenefit(benefit);
       setPayroll(payroll);
       setEmployees(employees);
+
+      const payrollSummary = await payrollSummaryFetch;
+      setPayrollSummary(await payrollSummary.json() as PayrollSummary);
     }
 
     fetchData()
@@ -151,6 +157,38 @@ function CompanyScreen() {
                   </Button>)}
               />
             }
+          </Grid>
+          <Grid item xl={12}>
+            <Card>
+              <CardHeader title={'Payroll and Benefits Summary'}>
+              </CardHeader>
+              <CardContent sx={{ bgColor: 'gray' }}>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  Total Employees
+                </Typography>
+                <Typography sx={{mb: 1.5}} variant="body2">
+                  {payrollSummary?.totalEmployees}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  Total Payroll Gross
+                </Typography>
+                <Typography sx={{mb: 1.5}} variant="body2">
+                {`$${payrollSummary?.totalPayrollGross}`}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  Total Benefits Cost Gross
+                </Typography>
+                <Typography sx={{mb: 1.5}} variant="body2">
+                {`$${payrollSummary?.totalBenefitsCost}`}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  Total Payroll with Benefits Gross
+                </Typography>
+                <Typography variant="body2">
+                  {`$${payrollSummary?.totalPayrollWithBenefits}`}
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
       </Box>
