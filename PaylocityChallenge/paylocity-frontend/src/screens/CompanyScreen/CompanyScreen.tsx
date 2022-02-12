@@ -27,6 +27,7 @@ function CompanyScreen() {
   const [payrollSummary, setPayrollSummary] = useState<PayrollSummary>();
   const [employees, setEmployees] = useState<Array<Employee>>([]);
   const [loading, setLoading] = useState(true);
+  const [payrollSummaryLoading, setPayrollSummaryLoading] = useState(true);
   const params = useParams();
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -58,6 +59,7 @@ function CompanyScreen() {
 
       const payrollSummary = await payrollSummaryFetch;
       setPayrollSummary(await payrollSummary.json() as PayrollSummary);
+      setPayrollSummaryLoading(false);
     }
 
     fetchData()
@@ -159,7 +161,7 @@ function CompanyScreen() {
             }
           </Grid>
           <Grid item xl={12}>
-            <Card>
+            {!payrollSummaryLoading && <Card>
               <CardHeader title={'Payroll and Benefits Summary'}>
               </CardHeader>
               <CardContent sx={{ bgColor: 'gray' }}>
@@ -188,7 +190,7 @@ function CompanyScreen() {
                   {`$${payrollSummary?.totalPayrollWithBenefits}`}
                 </Typography>
               </CardContent>
-            </Card>
+            </Card>}
           </Grid>
         </Grid>
       </Box>
