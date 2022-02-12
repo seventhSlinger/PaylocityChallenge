@@ -18,7 +18,7 @@ namespace Paylocity.API.Controllers
         [HttpPost("")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult Create([FromBody] TModel model)
+        public virtual IActionResult Create([FromBody] TModel model)
         {
             if (model == null)
             {
@@ -33,7 +33,7 @@ namespace Paylocity.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult Update([FromBody] TModel model)
+        public virtual IActionResult Update([FromBody] TModel model)
         {
             if (model == null)
             {
@@ -54,7 +54,7 @@ namespace Paylocity.API.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult Delete([FromRoute] int id)
+        public virtual IActionResult Delete([FromRoute] int id)
         {
             var existingModel = _repository.Get(id);
             if (existingModel == null)
@@ -70,7 +70,7 @@ namespace Paylocity.API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public IActionResult Get([FromRoute] int id)
+        public virtual IActionResult Get([FromRoute] int id)
         {
             var model = _repository.Get(id);
 

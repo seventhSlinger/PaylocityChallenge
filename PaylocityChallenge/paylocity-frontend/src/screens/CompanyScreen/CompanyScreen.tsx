@@ -18,7 +18,9 @@ import CustomTable from "../../components/Table/CustomTable";
 import EmployeeButtonGroup from "./EmployeeButtonGroup";
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+
 import PayrollSummary from "../../models/PayrollSummary";
+import ErrorAlert from "../../components/Alert/ErrorAlert";
 
 function CompanyScreen() {
   const [company, setCompany] = useState<Company | undefined>();
@@ -28,6 +30,8 @@ function CompanyScreen() {
   const [employees, setEmployees] = useState<Array<Employee>>([]);
   const [loading, setLoading] = useState(true);
   const [payrollSummaryLoading, setPayrollSummaryLoading] = useState(true);
+  const [deleteErrorAlertVisible, setDeleteErrorAlertVisible] = useState(false);
+  const [deleteErrorMessage, setDeleteErrorAlertMessage] = useState('');
   const params = useParams();
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -74,7 +78,15 @@ function CompanyScreen() {
       }
     } as RequestInit;
     const url = `/employee/${employee?.id}`
-    await fetch(url, options);
+    const response = await fetch(url, options);
+    if (response.status !== 204) {
+      const responseText = await response.json();
+      setDeleteErrorAlertMessage(responseText.message);
+      setDeleteErrorAlertVisible(true);
+
+      return;
+    }
+
     const employeesFetch = await fetch(`/employee/company/${company?.id}`);
     const employees = await employeesFetch.json() as Array<Employee>;
     setEmployees(employees);
@@ -82,6 +94,7 @@ function CompanyScreen() {
 
   return (
     <Container maxWidth="xl">
+      {deleteErrorAlertVisible && <ErrorAlert message={deleteErrorMessage} onClose={() => setDeleteErrorAlertVisible(false)} />}
       <Box sx={{ flexGrow: 1, height: '100vh' }}>
         <Grid container justifyContent={'center'} spacing={4}>
           <Grid item xl={12}>
