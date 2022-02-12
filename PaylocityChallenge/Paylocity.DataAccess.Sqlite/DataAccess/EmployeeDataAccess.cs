@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Paylocity.DataAccess.Sqlite.Interfaces;
 using Paylocity.Models.Models;
 using System.Collections.Generic;
-using Z.Dapper.Plus;
 
 namespace Paylocity.DataAccess.Sqlite.DataAccess
 {

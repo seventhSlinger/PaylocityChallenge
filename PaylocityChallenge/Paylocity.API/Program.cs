@@ -1,4 +1,6 @@
 using Common.Configuration;
+using Paylocity.Business.Interfaces;
+using Paylocity.Business.Services;
 using Paylocity.DataAccess.Sqlite.DataAccess;
 using Paylocity.DataAccess.Sqlite.Interfaces;
 using Paylocity.Models.Models;
@@ -22,11 +24,15 @@ builder.Services.AddScoped<IRepository<Company>, CompanyRepository>();
 builder.Services.AddScoped<IRepository<Benefit>, BenefitRepository>();
 builder.Services.AddScoped<IRepository<Payroll>, PayrollRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IDependentRepository, DependentRepository>();
 
 builder.Services.AddScoped<IDataAccess<Company>, CompanyDataAccess>();
 builder.Services.AddScoped<IDataAccess<Benefit>, BenefitDataAccess>();
 builder.Services.AddScoped<IDataAccess<Payroll>, PayrollDataAccess>();
 builder.Services.AddScoped<IEmployeeDataAccess, EmployeeDataAccess>();
+builder.Services.AddScoped<IDependentDataAccess, DependentDataAccess>();
+
+builder.Services.AddScoped<IPayrollService, PayrollService>();
 
 var app = builder.Build();
 
