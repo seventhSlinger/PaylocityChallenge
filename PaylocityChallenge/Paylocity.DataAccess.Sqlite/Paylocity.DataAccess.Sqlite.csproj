@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Paylocity.Models\Paylocity.Models.csproj" />
   </ItemGroup>
 

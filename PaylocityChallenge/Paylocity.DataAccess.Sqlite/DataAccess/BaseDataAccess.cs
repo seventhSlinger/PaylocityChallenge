@@ -12,8 +12,8 @@ namespace Paylocity.DataAccess.Sqlite.DataAccess
     internal abstract class BaseDataAccess<TModel> : IDataAccess<TModel>
          where TModel : class, IUniqueModel
     {
-        private readonly string _tableName;
-        private readonly string _connectionString;
+        protected readonly string _tableName;
+        protected readonly string _connectionString;
 
         public BaseDataAccess(string tableName,
             IOptions<DatabaseConfig> config)
@@ -35,7 +35,7 @@ namespace Paylocity.DataAccess.Sqlite.DataAccess
             return model.Id;
         }
 
-        public TModel Get(int id)
+        public virtual TModel Get(int id)
         {
             using var connection = new SqliteConnection(_connectionString);
 

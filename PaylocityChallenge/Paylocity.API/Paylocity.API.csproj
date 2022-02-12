@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Paylocity.Models\Paylocity.Models.csproj" />
+    <ProjectReference Include="..\Paylocity.Repository\Paylocity.Repository.csproj" />
   </ItemGroup>
 
 </Project>
