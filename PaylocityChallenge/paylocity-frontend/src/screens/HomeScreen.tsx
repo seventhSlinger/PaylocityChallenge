@@ -48,8 +48,8 @@ function HomeScreen() {
                 },
                 {
                   getValue: (company: Company) => 'Value',
-                  customRenderer: (value: Company) => (<Button>
-                    <Link to={`/company/${value.id}`}>View</Link>
+                  customRenderer: (value: Company) => (<Button variant='contained'>
+                    <Link style={{ color: 'white' }} to={`/company/${value.id}`}>View</Link>
                   </Button>),
                 }
               ]}

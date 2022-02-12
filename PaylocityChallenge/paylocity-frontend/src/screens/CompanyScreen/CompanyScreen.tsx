@@ -132,8 +132,8 @@ function CompanyScreen() {
                     customRenderer: (value: Employee) => <EmployeeButtonGroup employee={value} />,
                   }
                 ]}
-                footerRenderer={() => (<Button>
-                    <Link to={`/employee/create`}>Create</Link>
+                footerRenderer={() => (<Button variant="contained" sx={{mt: 1.5, mb: 1.5, ml: 1.5}}>
+                    <Link style={{ color: 'white'}} to={`/company/${company?.id}/employee/create`}>Create</Link>
                   </Button>)}
               />
             }
