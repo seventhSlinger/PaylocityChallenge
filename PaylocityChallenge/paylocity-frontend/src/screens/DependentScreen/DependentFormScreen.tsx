@@ -13,6 +13,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import BackButton from '../../components/BackButton/BackButton';
 
 interface IDependentScreenProps {
     mode: 'read' | 'create' | 'update';
@@ -74,7 +75,7 @@ function DependentFormScreen(props: IDependentScreenProps) {
         } as RequestInit;
         const url = props.mode == 'create' ? `/dependent` : `/dependent/${dependent?.id}`
         const response = await fetch(url, options);
-        navigate(`/company/${params.companyId}/`);
+        navigate(`/company/${params.companyId}/employee/${params.employeeId}/dependent`);
     }
 
     return (
@@ -140,9 +141,9 @@ function DependentFormScreen(props: IDependentScreenProps) {
                             Save
                         </LoadingButton>
                     </FormControl>}
-                </Card>
-
-            </Box>
+                </Card>  
+                <BackButton link={`/company/${params.companyId}/employee/${params.employeeId}/dependent`} />
+            </Box>       
         </Container>
     );
 }

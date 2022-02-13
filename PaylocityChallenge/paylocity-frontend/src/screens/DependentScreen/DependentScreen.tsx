@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Dependent from '../../models/Dependent';
 import CustomTable from "../../components/Table/CustomTable";
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import DependentButtonGroup from './DependentButtonGroup';
+import BackButton from '../../components/BackButton/BackButton';
 
 function DependentScreen() {
     const [dependents, setDependents] = useState<Array<Dependent>>([]);
@@ -40,6 +41,14 @@ function DependentScreen() {
         setDependents(dependents);
     }
 
+    const renderFooter = () => (
+        <React.Fragment>
+            <Button variant="contained" sx={{ mt: 1.5, mb: 1.5, ml: 1.5 }}>
+                <Link style={{ color: 'white' }} to={`/company/${params.companyId}/employee/${params.employeeId}/dependent/create`}>Create</Link>
+            </Button>
+        </React.Fragment>
+    );
+
     return (
         <Container maxWidth="xl">
              <Box sx={{ mb: 2, backgroundColor: 'white', flexGrow: 1, height: '5vh' }}>
@@ -68,11 +77,10 @@ function DependentScreen() {
                                 customRenderer: (value: Dependent) => <DependentButtonGroup companyId={params.companyId || ''} dependent={value} onDeletePress={onDeletePress} />,
                             }
                         ]}
-                        footerRenderer={() => (<Button variant="contained" sx={{ mt: 1.5, mb: 1.5, ml: 1.5 }}>
-                            <Link style={{ color: 'white' }} to={`/company/${params.companyId}/employee/${params.employeeId}/dependent/create`}>Create</Link>
-                        </Button>)}
+                        footerRenderer={() => renderFooter()}
                     />
-                }
+                }             
+                <BackButton link={`/company/${params.companyId}`} />
             </Box>
         </Container>
     );

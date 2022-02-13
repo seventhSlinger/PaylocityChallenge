@@ -21,6 +21,7 @@ import { Button } from '@mui/material';
 
 import PayrollSummary from "../../models/PayrollSummary";
 import ErrorAlert from "../../components/Alert/ErrorAlert";
+import BackButton from "../../components/BackButton/BackButton";
 
 function CompanyScreen() {
   const [company, setCompany] = useState<Company | undefined>();
@@ -87,9 +88,16 @@ function CompanyScreen() {
       return;
     }
 
+    setPayrollSummaryLoading(true);
     const employeesFetch = await fetch(`/employee/company/${company?.id}`);
+    const payrollSummaryFetch = fetch(`/company/${company?.id}/payroll`);
+
     const employees = await employeesFetch.json() as Array<Employee>;
     setEmployees(employees);
+
+    const payrollSummary = await payrollSummaryFetch;
+    setPayrollSummary(await payrollSummary.json() as PayrollSummary);
+    setPayrollSummaryLoading(false);
   }
 
   return (
@@ -206,6 +214,7 @@ function CompanyScreen() {
             </Card>}
           </Grid>
         </Grid>
+        <BackButton link={'/'} />
       </Box>
     </Container>
   );

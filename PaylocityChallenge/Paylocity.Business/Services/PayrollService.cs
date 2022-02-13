@@ -8,6 +8,7 @@ namespace Paylocity.Business.Services
 {
     internal class PayrollService : IPayrollService
     {
+        private const decimal _nameStartsWithLetterADiscountAmount = 0.9m;
         private readonly IRepository<Company> _companyRepository;
         private readonly IRepository<Benefit> _benefitRepository;
         private readonly IRepository<Payroll> _payrollRepository;
@@ -42,9 +43,9 @@ namespace Paylocity.Business.Services
 
             foreach (var employee in employees)
             {
-                var totalBenefitCostForEmployee = employee.FirstName.StartsWith("A") ? benefits.CostPerEmployeePerYear * 0.9m : benefits.CostPerEmployeePerYear;
+                var totalBenefitCostForEmployee = employee.FirstName.StartsWith("A") ? benefits.CostPerEmployeePerYear * _nameStartsWithLetterADiscountAmount : benefits.CostPerEmployeePerYear;
                 var dependentsForEmployee = dependentsForEmployees.Where(dependent => dependent.EmployeeId == employee.Id);
-                totalBenefitCostForEmployee += dependentsForEmployee.Sum(dependent => dependent.FirstName.StartsWith("A") ? benefits.CostPerDependentPerYear * 0.9m : benefits.CostPerDependentPerYear);
+                totalBenefitCostForEmployee += dependentsForEmployee.Sum(dependent => dependent.FirstName.StartsWith("A") ? benefits.CostPerDependentPerYear * _nameStartsWithLetterADiscountAmount : benefits.CostPerDependentPerYear);
 
                 var totalBenefitCostForEmployeePayroll = (payroll.EmployeePayPerPeriod * payroll.NumberOfPayPeriodsPerYear) - totalBenefitCostForEmployee;
 

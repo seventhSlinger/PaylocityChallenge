@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { CircularProgress } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
+import BackButton from '../../components/BackButton/BackButton';
 
 interface IEmployeeScreenProps {
     mode: 'read' | 'create' | 'update';
@@ -128,7 +129,7 @@ function EmployeeScreen(props: IEmployeeScreenProps) {
                         </LoadingButton>
                     </FormControl>}
                 </Card>
-
+                <BackButton link={`/company/${params.companyId}`} />
             </Box>
         </Container>
     );
