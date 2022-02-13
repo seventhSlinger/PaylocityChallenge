@@ -2,6 +2,7 @@
 
 Startup instructions:
 The frontend and backend are contained in the same solution folder, however they require different steps to run. I created the backend using Visual Studio 2022 and .NET 6.0. The frontend was created using the "create-react-app" TypeScript template. You will need NPM installed.
+The included SQLite database has the initial migration already run, as well as some test data. The migration was run using some temporary dapper code. It is included in the Paylocity.DataAccess.Sqlite project.
 
 ### Backend:
 
