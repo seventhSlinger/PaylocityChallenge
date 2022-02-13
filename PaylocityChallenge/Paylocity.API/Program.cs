@@ -6,6 +6,8 @@ using Paylocity.DataAccess.Sqlite.Interfaces;
 using Paylocity.Models.Models;
 using Paylocity.Repository.Interfaces;
 using Paylocity.Repository.Repository;
+using AutoMapper;
+using Paylocity.API.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,20 @@ builder.Services.AddScoped<IEmployeeDataAccess, EmployeeDataAccess>();
 builder.Services.AddScoped<IDependentDataAccess, DependentDataAccess>();
 
 builder.Services.AddScoped<IPayrollService, PayrollService>();
+
+builder.Services.AddAutoMapper(config => config.CreateProfile("s", mappingConifg =>
+{
+    mappingConifg.CreateMap<Company, CompanyViewModel>();
+    mappingConifg.CreateMap<CompanyViewModel, Company>();
+    mappingConifg.CreateMap<Benefit, BenefitViewModel>();
+    mappingConifg.CreateMap<BenefitViewModel, Benefit>();
+    mappingConifg.CreateMap<Payroll, PayrollViewModel>();
+    mappingConifg.CreateMap<PayrollViewModel, Payroll>();
+    mappingConifg.CreateMap<Employee, EmployeeViewModel>();
+    mappingConifg.CreateMap<EmployeeViewModel, Employee>();
+    mappingConifg.CreateMap<Dependent, DependentViewModel>();
+    mappingConifg.CreateMap<DependentViewModel, Dependent>();
+}));
 
 var app = builder.Build();
 

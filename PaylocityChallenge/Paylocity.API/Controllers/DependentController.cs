@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Paylocity.API.ViewModels;
 using Paylocity.Models.Models;
 using Paylocity.Repository.Interfaces;
 
 namespace Paylocity.API.Controllers
 {
     [Route("/dependent")]
-    public class DependentController : BaseController<Dependent>
+    public class DependentController : BaseController<DependentViewModel, Dependent>
     {
         private readonly IDependentRepository _dependentRepository;
 
-        public DependentController(IDependentRepository repository) : base(repository)
+        public DependentController(IDependentRepository repository, IMapper mapper) : base(repository, mapper)
         {
             _dependentRepository = repository;
         }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Paylocity.API.ViewModels;
 using Paylocity.Business.Interfaces;
 using Paylocity.Models.Models;
 using Paylocity.Repository.Interfaces;
@@ -6,12 +8,12 @@ using Paylocity.Repository.Interfaces;
 namespace Paylocity.API.Controllers
 {
     [Route("/company")]
-    public class CompanyController : BaseController<Company>
+    public class CompanyController : BaseController<CompanyViewModel, Company>
     {
         private readonly IPayrollService _payrollService;
 
         public CompanyController(IRepository<Company> repository,
-            IPayrollService payrollService) : base(repository)
+            IPayrollService payrollService, IMapper mapper) : base(repository, mapper)
         {
             _payrollService = payrollService;
         }
