@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Company from '../models/Company';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import CustomTable from '../components/Table/CustomTable';
 import Container from '@mui/material/Container';
@@ -13,7 +13,8 @@ import Box from '@mui/material/Box';
 function HomeScreen() {
   const [companies, setCompanies] = useState<Array<Company>>([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const fetchCompanies = async () => {
       const companiesFetch = await fetch('/company');
@@ -48,8 +49,9 @@ function HomeScreen() {
                 },
                 {
                   getValue: (company: Company) => 'Value',
-                  customRenderer: (value: Company) => (<Button variant='contained'>
-                    <Link style={{ color: 'white' }} to={`/company/${value.id}`}>View</Link>
+                  customRenderer: (value: Company) => (
+                  <Button variant='contained' onClick={() => navigate(`/company/${value.id}`)}>
+                    View
                   </Button>),
                 }
               ]}

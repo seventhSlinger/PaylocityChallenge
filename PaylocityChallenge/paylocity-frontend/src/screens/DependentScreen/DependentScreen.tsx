@@ -1,10 +1,9 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Dependent from '../../models/Dependent';
 import CustomTable from "../../components/Table/CustomTable";
-import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import DependentButtonGroup from './DependentButtonGroup';
@@ -14,6 +13,7 @@ function DependentScreen() {
     const [dependents, setDependents] = useState<Array<Dependent>>([]);
     const [loading, setLoading] = useState(true);
     const params = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,8 +43,11 @@ function DependentScreen() {
 
     const renderFooter = () => (
         <React.Fragment>
-            <Button variant="contained" sx={{ mt: 1.5, mb: 1.5, ml: 1.5 }}>
-                <Link style={{ color: 'white' }} to={`/company/${params.companyId}/employee/${params.employeeId}/dependent/create`}>Create</Link>
+            <Button variant="contained" 
+                sx={{ mt: 1.5, mb: 1.5, ml: 1.5 }}
+                onClick={() => navigate(`/company/${params.companyId}/employee/${params.employeeId}/dependent/create`)}
+                >
+                Create
             </Button>
         </React.Fragment>
     );

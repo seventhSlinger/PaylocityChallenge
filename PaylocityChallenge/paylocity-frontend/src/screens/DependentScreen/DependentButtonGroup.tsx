@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AlertDialog from '../../components/Alert/AlertDialog';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -16,6 +16,7 @@ interface IDependentButtonGroupProps {
 function DependentButtonGroup(props: IDependentButtonGroupProps) {
     const [open, setOpen] = useState(false);
     const [deleting, setDeleting] = useState(false);
+    const navigate = useNavigate();
 
     const onDeleteClick = async () => {
         setOpen(false);
@@ -27,15 +28,11 @@ function DependentButtonGroup(props: IDependentButtonGroupProps) {
     return (
         <React.Fragment>
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                <Button>
-                    <Link style={{ color: 'white' }} to={`/company/${props.companyId}/employee/${props.dependent.employeeId}/dependent/${props.dependent.id}`}>
-                        View
-                    </Link>
+                <Button onClick={() => navigate(`/company/${props.companyId}/employee/${props.dependent.employeeId}/dependent/${props.dependent.id}`)}>
+                    View
                 </Button>
-                <Button>
-                    <Link style={{ color: 'white' }} to={`/company/${props.companyId}/employee/${props.dependent.employeeId}/dependent/update/${props.dependent.id}`}>
-                        Update
-                    </Link>
+                <Button onClick={() => navigate(`/company/${props.companyId}/employee/${props.dependent.employeeId}/dependent/update/${props.dependent.id}`)}>
+                    Update
                 </Button>
                 <LoadingButton
                     color="error"

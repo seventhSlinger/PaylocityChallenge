@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Employee from '../../models/Employee';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AlertDialog from '../../components/Alert/AlertDialog';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DeleteIcon  from '@mui/icons-material/Delete';
@@ -15,6 +15,7 @@ interface IEmployeeButtonGroupProps {
 function EmployeeButtonGroup(props: IEmployeeButtonGroupProps) {
     const [open, setOpen] = useState(false);
     const [deleting, setDeleting] = useState(false);
+    const navigate = useNavigate();
 
     const onDeleteClick = async () => {
         setOpen(false);
@@ -26,20 +27,14 @@ function EmployeeButtonGroup(props: IEmployeeButtonGroupProps) {
     return (
         <React.Fragment>
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                <Button>
-                    <Link style={{ color: 'white' }} to={`/company/${props.employee.companyId}/employee/${props.employee.id}`}>
-                        View
-                    </Link>
+                <Button onClick={() => navigate(`/company/${props.employee.companyId}/employee/${props.employee.id}`)}>
+                    View
                 </Button>
-                <Button>
-                    <Link style={{ color: 'white' }} to={`/company/${props.employee.companyId}/employee/update/${props.employee.id}`}>
-                        Update
-                    </Link>
+                <Button onClick={() => navigate(`/company/${props.employee.companyId}/employee/update/${props.employee.id}`)}>
+                    Update
                 </Button>
-                <Button>
-                    <Link style={{ color: 'white' }} to={`/company/${props.employee.companyId}/employee/${props.employee.id}/dependent`}>
+                <Button onClick={() => navigate(`/company/${props.employee.companyId}/employee/${props.employee.id}/dependent`)}>
                         Dependents
-                    </Link>
                 </Button>
                 <LoadingButton
                     color="error"

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Company from "../../models/Company";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -34,6 +34,7 @@ function CompanyScreen() {
   const [deleteErrorAlertVisible, setDeleteErrorAlertVisible] = useState(false);
   const [deleteErrorMessage, setDeleteErrorAlertMessage] = useState('');
   const params = useParams();
+  const navigate = useNavigate();
 
   const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -175,8 +176,9 @@ function CompanyScreen() {
                     customRenderer: (value: Employee) => <EmployeeButtonGroup employee={value} onDeletePress={onDeletePress}/>,
                   }
                 ]}
-                footerRenderer={() => (<Button variant="contained" sx={{mt: 1.5, mb: 1.5, ml: 1.5}}>
-                    <Link style={{ color: 'white'}} to={`/company/${company?.id}/employee/create`}>Create</Link>
+                footerRenderer={() => (
+                  <Button variant="contained" sx={{mt: 1.5, mb: 1.5, ml: 1.5}} onClick={() => navigate(`/company/${company?.id}/employee/create`)}>
+                      Create
                   </Button>)}
               />
             }
