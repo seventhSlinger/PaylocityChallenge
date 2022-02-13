@@ -1,0 +1,67 @@
+﻿CREATE TABLE IF NOT EXISTS tblBenefit (
+	Id INTEGER PRIMARY KEY AUTOINCREMENT,
+	CostPerEmployeePerYear DECIMAL(10,5) NOT NULL,
+	CostPerDependentPerYear DECIMAL(10,5) NOT NULL	
+);
+
+CREATE TABLE IF NOT EXISTS tblPayroll (
+	Id INTEGER PRIMARY KEY AUTOINCREMENT,
+	EmployeePayPerPeriod DECIMAL(10,5) NOT NULL,
+	NumberOfPayPeriodsPerYear INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS tblCompany (
+	Id INTEGER PRIMARY KEY AUTOINCREMENT,
+	BenefitId INTEGER NOT NULL,
+	PayrollId INTEGER NOT NULL,
+	CompanyName	TEXT NOT NULL,
+	CompanyDescription TEXT,
+	
+	FOREIGN KEY(BenefitId) REFERENCES tblBenefit(Id)
+	FOREIGN KEY(PayrollId) REFERENCES tblPayroll(Id)
+);
+
+CREATE TABLE IF NOT EXISTS tblEmployee (
+	Id INTEGER PRIMARY KEY AUTOINCREMENT,
+	CompanyId INTEGER NOT NULL,
+	FirstName TEXT NOT NULL,
+	LastName TEXT NOT NULL,
+
+	FOREIGN KEY(CompanyId) REFERENCES tblCompany(Id)
+);
+
+CREATE TABLE IF NOT EXISTS tblDependent (
+	Id INTEGER PRIMARY KEY AUTOINCREMENT,
+	EmployeeId INTEGER NOT NULL,
+	FirstName TEXT NOT NULL,
+	LastName TEXT NOT NULL,
+	IsSpouse BOOLEAN NOT NULL,
+
+	FOREIGN KEY(EmployeeId) REFERENCES tblEmployee(Id)
+);
+
+INSERT INTO tblBenefit
+	(CostPerEmployeePerYear, CostPerDependentPerYear)
+VALUES
+	(1000.00, 500.00)
+
+INSERT INTO tblPayroll
+	(EmployeePayPerPeriod, NumberOfPayPeriodsPerYear)
+VALUES
+	(2000, 26)
+
+INSERT INTO tblCompany 
+	(CompanyName, CompanyDescription, BenefitId, PayrollId)
+VALUES
+	('Paylocity', 'Paylocity is an American company which provides cloud-based payroll and human capital management software', 1, 1)
+
+INSERT INTO tblEmployee
+	(CompanyId, FirstName, LastName)
+VALUES
+	(1, 'Chris', 'Cimino')
+
+INSERT INTO tblDependent
+	(EmployeeId, FirstName, LastName, IsSpouse)
+VALUES
+	(1, 'Spouse', 'Cimino', 1)
+
